@@ -124,6 +124,7 @@ public class BDao {
 			conn = dataSource.getConnection();
 			String query = "select * from smvc_board where bId = ?";
 			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, Integer.parseInt(strID));
 			rs = pstmt.executeQuery();
 			
 			if (rs.next()) {
@@ -154,7 +155,7 @@ public class BDao {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
 			}
-	}
+		}
 		
 		return dto;
 	}
@@ -170,6 +171,48 @@ public class BDao {
 	}
 	
 	public BDto reply_view(String strID) {
+		
+		BDto dto = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			String query = "select * from smvc_board where bId = ?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, Integer.parseInt(strID));
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				int bId = rs.getInt("bId");
+				String bName = rs.getString("bName");
+				String bTitle = rs.getString("bTitle");
+				String bContent = rs.getString("bContent");
+				Timestamp bDate = rs.getTimestamp("bDate");
+				int bHit = rs.getInt("bHit");
+				int bGroup = rs.getInt("bGroup");
+				int bStep = rs.getInt("bStep");
+				int bIndent = rs.getInt("bIndent");
+				
+				dto = new BDto(bId, bName, bTitle, bContent, bDate, bHit, bGroup, bStep, bIndent);
+				
+			}
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {			
+			try {
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+			} catch (Exception e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+		}
 		
 		return dto;
 	}
