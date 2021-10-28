@@ -19,10 +19,10 @@
 		</tr>
 		<c:forEach items="${list }" var="dto">
 		<tr>
-			<td>${dto.bID }</td>
+			<td>${dto.bId }</td>
 			<td>${dto.bName }</td>			
 			<td>
-				<c:forEach begin="1" end="$dto.bIndent">&nbsp;&nbsp;</c:forEach>
+				<c:forEach begin="1" end="${dto.bIndent}">&nbsp;&nbsp;</c:forEach>
 				<a href="content_view?bId=${dto.bId }">${dto.bTitle }</a>			
 			</td>
 			<td>${dto.bDate }</td>
