@@ -115,6 +115,8 @@ public class BDao {
 	
 	public BDto contentView(String strID) {
 		
+		upHit(strID);
+		
 		BDto dto = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -162,11 +164,62 @@ public class BDao {
 	
 	public void modify(String bId, String bName, String bTitle, String bContent) {
 		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			String query="update smvc_board set bName = ?, bTitle =?, bContent = ? where bId = ?";
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, bName);
+			pstmt.setString(2, bTitle);
+			pstmt.setString(3, bContent);
+			pstmt.setInt(4, Integer.parseInt(bId));
+			
+			int rn = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {			
+				try {
+					if(pstmt != null) pstmt.close();
+					if(conn != null) conn.close();
+				} catch (Exception e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+		}
 		
 	}
 	
 	public void delete(String bId) {
 		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			String query="delete from smvc_board where bId = ?";
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setInt(1, Integer.parseInt(bId));
+						
+			int rn = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {			
+				try {
+					if(pstmt != null) pstmt.close();
+					if(conn != null) conn.close();
+				} catch (Exception e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+		}
 		
 	}
 	
@@ -284,5 +337,34 @@ public class BDao {
 					e2.printStackTrace();
 				}
 		}
+	}
+	
+	public void upHit(String strId) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			String query="update smvc_board set bHit = bHit + 1 where bId = ?";
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setInt(1, Integer.parseInt(strId));
+			
+			int rn = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {			
+				try {
+					if(pstmt != null) pstmt.close();
+					if(conn != null) conn.close();
+				} catch (Exception e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+		}
+		
 	}
 }
