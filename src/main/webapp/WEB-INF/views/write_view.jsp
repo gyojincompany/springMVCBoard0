@@ -23,7 +23,7 @@
 			</tr>
 				<td align="center" colspan="2"><textarea name="bContent" rows="10" cols="60"></textarea></td>
 			<tr>			
-				<td colspan="2"><a href="">글 목록 보기</a></td>
+				<td colspan="2"><a href="list">글 목록 보기</a></td>
 			</tr>
 			<tr>
 				<td align="center" colspan="2"><input type="submit" value="입력"> &nbsp;&nbsp; <input type="reset" value="취소"></td>
